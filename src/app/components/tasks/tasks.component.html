@@ -1,0 +1,4 @@
+<ul *ngFor="let task of tasks; let i = index">
+    {{task.title + task.text + task.date + task.id}}
+    <app-button text="edit task" (btnClick)="toggleTaskAction(task.id)"></app-button>
+</ul>
