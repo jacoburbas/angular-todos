@@ -1,20 +1,30 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
+import { Task } from '../Task';
 @Injectable({
   providedIn: 'root',
 })
 export class UiService {
   private showTaskAction: boolean = false;
-  private taskId: number = -1;
+  private taskToEdit: Task = {
+    id: -1,
+    title: '',
+    text: '',
+    date: '',
+  };
   private subject = new Subject<any>();
 
   constructor() {}
 
-  toggleTaskAction(taskToEdit?: number): void {
+  toggleTaskAction(taskToEdit?: Task): void {
+    taskToEdit ? (this.taskToEdit = taskToEdit) : '';
     this.showTaskAction = !this.showTaskAction;
-    taskToEdit ? (this.taskId = taskToEdit) : '';
-    this.subject.next(this.showTaskAction); // switching this up makes one thing work and the other to break
-    this.subject.next(this.taskId);
+    this.subject.next(this.showTaskAction);
+  }
+
+  getTaskToEdit() {
+    console.log(this.taskToEdit);
+    return this.taskToEdit;
   }
 
   onToggle(): Observable<any> {

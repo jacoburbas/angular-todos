@@ -7,7 +7,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  showTaskAction: boolean = false;
+  showTaskAction: boolean;
   subscription: Subscription;
 
   constructor(private uiService: UiService) {

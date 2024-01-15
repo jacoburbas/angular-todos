@@ -11,6 +11,22 @@ import { HeaderComponent } from './components/header/header.component';
 import { ButtonComponent } from './components/button/button.component';
 import { TasksComponent } from './components/tasks/tasks.component';
 import { TaskActionComponent } from './components/task-action/task.action.component';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import * as fromTasks from './store/tasks.reducers';
+import { TasksEffects } from './store/tasks.effects';
+import { TasksStoreService } from './services/tasks-store.service';
+import { RouterModule, Routes } from '@angular/router';
+
+const appRoutes: Routes = [
+  {
+    path: '',
+    component: TasksComponent,
+  },
+  {
+    path: 'admin',
+    component: TasksComponent,
+  },
+];
 
 @NgModule({
   declarations: [
@@ -23,14 +39,16 @@ import { TaskActionComponent } from './components/task-action/task.action.compon
   imports: [
     HttpClientModule,
     FormsModule,
-    EffectsModule,
+    RouterModule.forRoot(appRoutes),
+    StoreModule.forRoot({ tasks: fromTasks.reducer }),
+    EffectsModule.forRoot([TasksEffects]),
     ReactiveFormsModule,
     BrowserModule,
     BrowserAnimationsModule,
     MatButtonModule,
-    StoreModule.forRoot({}, {}),
+    StoreDevtoolsModule.instrument({}),
   ],
-  providers: [],
+  providers: [TasksStoreService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

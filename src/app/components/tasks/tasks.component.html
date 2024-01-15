@@ -1,4 +1,6 @@
-<ul *ngFor="let task of tasks; let i = index">
-    {{task.title + task.text + task.date + task.id}}
-    <app-button text="edit task" (btnClick)="toggleTaskAction(task.id)"></app-button>
+<div *ngIf="hasRoute('/')" class="tasks-counter">task counter: {{ tasks.length }}</div>
+<ul *ngFor="let task of tasks">
+    {{task.title + " " + task.text + " " + task.date + " " + "TASK ID: " + task.id}}
+    <app-button *ngIf="hasRoute('/admin')" text="delete task" (btnClick)="onDeleteTask(task)"></app-button>
+    <app-button *ngIf="hasRoute('/admin')" text="edit task" (btnClick)="onEditTask(task)"></app-button>
 </ul>

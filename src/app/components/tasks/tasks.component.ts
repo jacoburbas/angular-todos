@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Task } from '../../Task';
 import { TaskService } from 'src/app/services/task.service';
 import { UiService } from 'src/app/services/ui.service';
-import { Subscription } from 'rxjs';
+import { Subscription, takeUntil } from 'rxjs';
 import { TasksStoreService } from 'src/app/services/tasks-store.service';
+import { Subject } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tasks',
@@ -11,33 +13,45 @@ import { TasksStoreService } from 'src/app/services/tasks-store.service';
   styleUrls: ['./tasks.component.scss'],
 })
 export class TasksComponent implements OnInit {
-  showTaskAction: boolean;
-  taskToEdit: number;
+  private ngUnsubscribe: Subject<void> = new Subject<void>();
   subscription: Subscription;
   tasks: Task[] = [];
 
   constructor(
-    private TaskService: TaskService,
-    private tasksStoreService: TasksStoreService,
-    private uiService: UiService
-  ) {
-    this.subscription = this.TaskService.getTasks().subscribe(
-      (tasks) => (this.tasks = tasks)
-    );
+    private taskService: TaskService,
+    private storeService: TasksStoreService,
+    private uiService: UiService,
+    private router: Router
+  ) {}
+
+  onEditTask(taskToEdit?: Task): void {
+    this.uiService.toggleTaskAction(taskToEdit);
   }
 
-  getTaskList() {
-    this.tasksStoreService
-      .getTaskList()
-      .subscribe({ next: (tasks: Task[]) => (this.tasks = tasks) });
-  }
-
-  toggleTaskAction(taskId?: number): void {
-    if (taskId) this.uiService.toggleTaskAction(taskId);
-    else this.uiService.toggleTaskAction();
+  onDeleteTask(taskToDelete: Task): void {
+    this.taskService
+      .deleteTask(taskToDelete)
+      .subscribe(() => this.storeService.getTaskList());
   }
 
   ngOnInit(): void {
-    this.getTaskList();
+    this.storeService
+      .getTaskList()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe({
+        next: (tasks: Task[]) => {
+          this.tasks = tasks;
+          console.log('component: ', tasks);
+        },
+      });
+  }
+
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+  }
+
+  hasRoute(route: string) {
+    return this.router.url === route;
   }
 }

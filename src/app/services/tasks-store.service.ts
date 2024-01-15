@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { getTaskList } from '../store/tasks.reducers';
+import { getTasks } from '../store/tasks.selectors';
 import * as TasksActions from '../store/tasks.actions';
 
 @Injectable({
@@ -13,6 +13,7 @@ export class TasksStoreService {
     this.store.dispatch({
       type: TasksActions.GET_TASK_LIST,
     });
-    return this.store.select(getTaskList);
+    console.log(this.store.select(getTasks));
+    return this.store.select(getTasks);
   }
 }

@@ -1,1 +1,1 @@
-<app-button text="Add tasks" (btnClick)="toggleTaskAction()"></app-button>
+<app-button *ngIf="hasRoute('/admin')" text="Add tasks" (btnClick)="onAddTask()"></app-button>
