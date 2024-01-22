@@ -1,94 +1,33 @@
 {
   "tasks": [
     {
-      "title": "123",
-      "text": "123",
-      "date": "2024-01-05",
-      "id": 1
+      "id": 25,
+      "title": "222424",
+      "text": "42242424",
+      "date": "2024-01-05"
     },
     {
-      "title": "123123",
+      "id": 26,
+      "title": "111",
+      "text": "111",
+      "date": "2024-01-13"
+    },
+    {
+      "title": "123",
       "text": "123123",
-      "date": "2024-01-17",
-      "id": 2
-    },
-    {
-      "title": "sd",
-      "text": "sd",
-      "date": "2024-01-25",
-      "id": 5
-    },
-    {
-      "title": "123",
-      "text": "123",
-      "date": "2024-01-11",
-      "id": 7
-    },
-    {
-      "id": 8,
-      "title": "ccc",
-      "text": "ccc",
-      "date": "2024-01-26"
-    },
-    {
-      "title": " ccvb",
-      "text": "cvbcvb",
-      "date": "2024-01-19",
-      "id": 9
-    },
-    {
-      "title": "123",
-      "text": "123",
-      "date": "2024-01-19",
-      "id": 12
-    },
-    {
-      "id": 17,
-      "title": "zxczxczx",
-      "text": "czxczxczxc",
-      "date": "2024-01-25"
-    },
-    {
-      "id": 18,
-      "title": "123",
-      "text": "123",
-      "date": "2024-01-18"
-    },
-    {
-      "title": "123",
-      "text": "123",
-      "date": "2024-01-25",
-      "id": 19
-    },
-    {
-      "id": 23,
-      "title": "123123123",
-      "text": "123123123",
-      "date": "2024-01-19"
-    },
-    {
-      "title": "fff",
-      "text": "fff",
-      "date": "2024-01-24",
-      "id": 24
-    },
-    {
-      "title": "aaa",
-      "text": "aaa",
-      "date": "2024-01-24",
-      "id": 25
+      "date": "2024-01-12",
+      "id": 27
     }
   ],
+  "noUser": {},
   "accounts": [
     {
-      "accType": "user",
-      "login": "user",
-      "password": "userpassword"
+      "id": "user",
+      "accType": "user"
     },
     {
-      "accType": "admin",
-      "login": "admin",
-      "password": "adminpassword"
+      "id": "admin",
+      "accType": "admin"
     }
   ]
 }

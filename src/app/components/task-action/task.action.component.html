@@ -1,15 +1,24 @@
 <div class="overlay">
+  <mat-card class="overlay-inner">
+    <mat-card-title align="center">{{ taskToEdit.id == -1 ? 'Add task' : 'Edit task' }}</mat-card-title>
     <form>
-        <input hidden type="text" name="id" [(ngModel)]="taskToEdit.id" />
-        <label>Title:</label><input type="text" name="title" placeholder="{{ taskToEdit.title }}" [(ngModel)]="title" />
-        <div class="input-error" *ngIf="titleError"> title is empty</div>
-        <label>Text:</label><input type="text" name="text" placeholder="{{ taskToEdit.text }}" [(ngModel)]="text" />
-        <div class="input-error" *ngIf="textError"> text is empty</div>
-        <label>Date:</label><input type="text" name="date" placeholder="{{ taskToEdit.date }}" [(ngModel)]="date"
-          onfocus="(this.type='date')" onblur="(this.type='text')" />
-        <div class="input-error" *ngIf="dateError"> date is empty</div>
-        <app-button text="{{ taskToEdit.id == -1 ? 'Add task' : 'Edit task'  }}"
-          (click)="onFormSubmit($event)"></app-button>
-        <div class="exit" (click)="onFormClose()">x</div>
+      <input hidden type="text" name="id" [(ngModel)]="taskToEdit.id" />
+      <mat-form-field>
+        <mat-label>Title:</mat-label>
+        <input matInput type="text" name="title" [(ngModel)]="title">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Text:</mat-label>
+        <input matInput type="text" name="text" [(ngModel)]="text">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Date:</mat-label>
+        <input matInput type="text" name="date" type="date" [(ngModel)]="date">
+      </mat-form-field>
+      <app-button text="{{ taskToEdit.id == -1 ? 'Add task' : 'Edit task'  }}" (click)="onFormSubmit()"></app-button>
+      <div class="exit" (click)="onFormClose()">x</div>
     </form>
+  </mat-card>
+
+
 </div>

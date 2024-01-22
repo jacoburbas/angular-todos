@@ -1,1 +1,6 @@
-<app-button *ngIf="hasRoute('/admin')" text="Add tasks" (btnClick)="onAddTask()"></app-button>
+<mat-card class="header-container">
+    <mat-card-header>
+        <mat-card-title>{{ title }}</mat-card-title>
+    </mat-card-header>
+    <app-button *ngIf="hasRoute('/admin')" text="Add task" (btnClick)="onAddTask()"></app-button>
+</mat-card>

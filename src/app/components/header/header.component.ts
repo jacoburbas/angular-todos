@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { UiService } from 'src/app/services/ui.service';
+import { LoginService } from 'src/app/services/login.service';
 import { Router } from '@angular/router';
+import { Input } from '@angular/core';
 
 @Component({
   selector: 'app-header',
@@ -8,9 +10,19 @@ import { Router } from '@angular/router';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  constructor(private uiService: UiService, private router: Router) {}
+  @Input() title: string;
 
-  ngOnInit(): void {}
+  userAccType: String = 'user';
+  constructor(
+    private uiService: UiService,
+    private router: Router,
+    private loginService: LoginService
+  ) {}
+
+  ngOnInit(): void {
+    this.userAccType = this.loginService.getUserAccType();
+    console.log(this.userAccType);
+  }
 
   onAddTask(): void {
     this.uiService.toggleTaskAction({ id: -1, title: '', text: '', date: '' });

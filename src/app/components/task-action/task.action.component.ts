@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Task } from 'src/app/Task';
 import { UiService } from 'src/app/services/ui.service';
@@ -11,18 +11,11 @@ import { TasksStoreService } from 'src/app/services/tasks-store.service';
   styleUrls: ['./task.action.component.scss'],
 })
 export class TaskActionComponent implements OnInit {
-  @Output() onSuccesfulSubmit = new EventEmitter();
-
   subscription: Subscription;
   taskToEdit: Task;
   title: string = '';
   text: string = '';
   date: string = '';
-
-  titleError: boolean = false;
-  textError: boolean = false;
-  dateError: boolean = false;
-  idError: boolean = false;
 
   constructor(
     private uiService: UiService,
@@ -38,20 +31,7 @@ export class TaskActionComponent implements OnInit {
     this.taskToEdit = this.uiService.getTaskToEdit();
   }
 
-  onFormSubmit(e?: Event) {
-    if (!this.title) {
-      this.titleError = true;
-      return;
-    }
-    if (!this.text) {
-      this.textError = true;
-      return;
-    }
-    if (!this.date) {
-      this.dateError = true;
-      return;
-    }
-
+  onFormSubmit() {
     if (this.taskToEdit.id != -1) {
       const newTask: Task = {
         id: this.taskToEdit.id,
@@ -76,6 +56,10 @@ export class TaskActionComponent implements OnInit {
         .subscribe(() => this.storeService.getTaskList());
       console.log('POST');
     }
+    this.title = '';
+    this.text = '';
+    this.date = '';
+    this.uiService.toggleTaskAction();
   }
 
   onFormClose() {

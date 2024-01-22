@@ -1,0 +1,14 @@
+<mat-card>
+    <mat-card-title align="center">Login</mat-card-title>
+    <form>
+        <mat-form-field>
+            <mat-label>Login</mat-label>
+            <input matInput type="text" name="login" [(ngModel)]="login">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Password</mat-label>
+            <input matInput type="password" name="password" autocomplete="on" [(ngModel)]="password">
+        </mat-form-field>
+        <app-button text="Login" (click)="onLoginSubmit()"></app-button>
+    </form>
+</mat-card>

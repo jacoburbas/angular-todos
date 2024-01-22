@@ -1,6 +1,15 @@
-<div *ngIf="hasRoute('/')" class="tasks-counter">task counter: {{ tasks.length }}</div>
-<ul *ngFor="let task of tasks">
-    {{task.title + " " + task.text + " " + task.date + " " + "TASK ID: " + task.id}}
-    <app-button *ngIf="hasRoute('/admin')" text="delete task" (btnClick)="onDeleteTask(task)"></app-button>
-    <app-button *ngIf="hasRoute('/admin')" text="edit task" (btnClick)="onEditTask(task)"></app-button>
-</ul>
+<mat-card class="tasks-container">
+    <mat-card-subtitle class="tasks-counter">Task counter: <span>{{ tasks.length }}</span> </mat-card-subtitle>
+    <mat-card class="task" *ngFor="let task of tasks">
+        <mat-card-content class="task-title">{{ task.title }}
+        </mat-card-content>
+        <mat-card-content class="task-text">{{ task.text }}</mat-card-content>
+        <mat-card-content class="task-date">{{ task.date }}</mat-card-content>
+
+        <div *ngIf="hasRoute('/admin')" class="task-options">
+            <app-button text="delete task" (btnClick)="onDeleteTask(task)"></app-button>
+            <app-button text="edit task" (btnClick)="onEditTask(task)"></app-button>
+        </div>
+    </mat-card>
+
+</mat-card>

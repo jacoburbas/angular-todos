@@ -46,12 +46,12 @@ export class TasksComponent implements OnInit {
       });
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
   }
 
-  hasRoute(route: string) {
+  hasRoute(route: string): boolean {
     return this.router.url === route;
   }
 }
