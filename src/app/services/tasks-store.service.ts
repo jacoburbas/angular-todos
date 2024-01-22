@@ -13,7 +13,6 @@ export class TasksStoreService {
     this.store.dispatch({
       type: TasksActions.GET_TASK_LIST,
     });
-    console.log(this.store.select(getTasks));
     return this.store.select(getTasks);
   }
 }

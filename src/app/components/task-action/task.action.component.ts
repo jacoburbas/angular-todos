@@ -43,7 +43,6 @@ export class TaskActionComponent implements OnInit {
       this.taskService
         .updateTask(newTask)
         .subscribe(() => this.storeService.getTaskList());
-      console.log('PUT');
     } else if (this.taskToEdit.id == -1) {
       const newTask: Task = {
         title: this.title,
@@ -54,7 +53,6 @@ export class TaskActionComponent implements OnInit {
       this.taskService
         .postTask(newTask)
         .subscribe(() => this.storeService.getTaskList());
-      console.log('POST');
     }
     this.title = '';
     this.text = '';

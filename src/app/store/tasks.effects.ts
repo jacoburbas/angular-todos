@@ -14,7 +14,6 @@ export class TasksEffects {
         return this.tasksService.getTasks();
       }),
       map((tasks: any) => {
-        console.log(tasks);
         return TasksActions.GetTaskListSuccess({ tasks });
       }),
       catchError((err) => {

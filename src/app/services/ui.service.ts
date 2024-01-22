@@ -23,7 +23,6 @@ export class UiService {
   }
 
   getTaskToEdit() {
-    console.log(this.taskToEdit);
     return this.taskToEdit;
   }
 

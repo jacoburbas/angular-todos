@@ -23,15 +23,18 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { AdminComponent } from './components/admin/admin.component';
 import { MatCardModule } from '@angular/material/card';
+import { AuthGuard } from './services/auth.guard';
 
 const appRoutes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'admin',
     component: AdminComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'login',

@@ -41,7 +41,6 @@ export class TasksComponent implements OnInit {
       .subscribe({
         next: (tasks: Task[]) => {
           this.tasks = tasks;
-          console.log('component: ', tasks);
         },
       });
   }

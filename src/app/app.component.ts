@@ -24,9 +24,9 @@ export class AppComponent {
   }
 
   ngOnInit(): void {
-    if (!sessionStorage.getItem('userAccType')) {
-      this.router.navigate(['/login']);
-    }
+    // if (!sessionStorage.getItem('userAccType')) {
+    //   this.router.navigate(['/login']);
+    // }
     this.loginservice.setUserAccType(sessionStorage.getItem('userAccType'));
   }
 }

@@ -18,7 +18,6 @@ export interface Action {
 export const tasksReducer = createReducer(
   initialState,
   on(TasksActions.GetTaskListSuccess, (state, { tasks }) => {
-    console.log(tasks);
     return { ...state, taskList: tasks };
   })
 );
@@ -28,6 +27,5 @@ export const reducer = (state: State | undefined, action: Action) => {
 };
 
 export const getTaskList = (state: State) => {
-  console.log(state);
   return state.taskList;
 };

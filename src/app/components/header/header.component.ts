@@ -12,17 +12,13 @@ import { Input } from '@angular/core';
 export class HeaderComponent implements OnInit {
   @Input() title: string;
 
-  userAccType: String = 'user';
   constructor(
     private uiService: UiService,
     private router: Router,
     private loginService: LoginService
   ) {}
 
-  ngOnInit(): void {
-    this.userAccType = this.loginService.getUserAccType();
-    console.log(this.userAccType);
-  }
+  ngOnInit(): void {}
 
   onAddTask(): void {
     this.uiService.toggleTaskAction({ id: -1, title: '', text: '', date: '' });
