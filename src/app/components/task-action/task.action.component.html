@@ -1,21 +1,41 @@
 <div class="overlay">
   <mat-card class="overlay-inner">
     <mat-card-title align="center">{{ taskToEdit.id == -1 ? 'Add task' : 'Edit task' }}</mat-card-title>
-    <form>
+    <form #taskForm="ngForm" (ngSubmit)="onFormSubmit()">
       <input hidden type="text" name="id" [(ngModel)]="taskToEdit.id" />
       <mat-form-field>
+
         <mat-label>Title:</mat-label>
-        <input matInput type="text" name="title" [(ngModel)]="title">
+
+        <input matInput type="text" name="title" required minlength="3" maxlength="12" [(ngModel)]="task.title"
+          #title="ngModel">
+        <div *ngIf="title.invalid && (title.dirty || title.touched)" class="formError">
+          <div *ngIf="title.errors?.['required']">Title is required.</div>
+          <div *ngIf="title.errors?.['minlength']">
+            Title must be at least 3 characters long.
+          </div>
+        </div>
       </mat-form-field>
       <mat-form-field>
         <mat-label>Text:</mat-label>
-        <input matInput type="text" name="text" [(ngModel)]="text">
+        <input matInput type="text" name="text" required minlength="3" maxlength="40" [(ngModel)]="task.text"
+          #text="ngModel">
+        <div *ngIf="text.invalid && (text.dirty || text.touched)" class="formError">
+          <div *ngIf="text.errors?.['required']">Text is required.</div>
+          <div *ngIf="text.errors?.['minlength']">
+            Text must be at least 3 characters long.
+          </div>
+        </div>
       </mat-form-field>
       <mat-form-field>
         <mat-label>Date:</mat-label>
-        <input matInput type="text" name="date" type="date" [(ngModel)]="date">
+        <input matInput type="text" name="date" type="date" required [(ngModel)]="task.date" #date="ngModel">
+        <div *ngIf="date.invalid && (date.dirty || date.touched)" class="formError">
+          <div *ngIf="date.errors?.['required']">Date is required.</div>
+        </div>
       </mat-form-field>
-      <app-button text="{{ taskToEdit.id == -1 ? 'Add task' : 'Edit task'  }}" (click)="onFormSubmit()"></app-button>
+      <app-button text="{{ taskToEdit.id == -1 ? 'Add task' : 'Edit task'  }}"
+        disabled="{{!taskForm.valid}}"></app-button>
       <div class="exit" (click)="onFormClose()">x</div>
     </form>
   </mat-card>

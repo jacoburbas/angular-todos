@@ -13,9 +13,7 @@ import { TasksStoreService } from 'src/app/services/tasks-store.service';
 export class TaskActionComponent implements OnInit {
   subscription: Subscription;
   taskToEdit: Task;
-  title: string = '';
-  text: string = '';
-  date: string = '';
+  task: Task = { title: '', text: '', date: '' };
 
   constructor(
     private uiService: UiService,
@@ -35,33 +33,31 @@ export class TaskActionComponent implements OnInit {
     if (this.taskToEdit.id != -1) {
       const newTask: Task = {
         id: this.taskToEdit.id,
-        title: this.title,
-        text: this.text,
-        date: this.date,
+        title: this.task.title,
+        text: this.task.text,
+        date: this.task.date,
       };
 
-      this.taskService
-        .updateTask(newTask)
-        .subscribe(() => this.storeService.getTaskList());
+      this.taskService.updateTask(newTask).subscribe(() => {
+        this.storeService.getTaskList();
+        this.uiService.toggleTaskAction();
+      });
     } else if (this.taskToEdit.id == -1) {
-      const newTask: Task = {
-        title: this.title,
-        text: this.text,
-        date: this.date,
-      };
+      const newTask: Task = this.task;
 
-      this.taskService
-        .postTask(newTask)
-        .subscribe(() => this.storeService.getTaskList());
+      this.taskService.postTask(newTask).subscribe(() => {
+        this.storeService.getTaskList();
+        this.uiService.toggleTaskAction();
+      });
     }
-    this.title = '';
-    this.text = '';
-    this.date = '';
-    this.uiService.toggleTaskAction();
+    this.task.title = '';
+    this.task.text = '';
+    this.task.date = '';
   }
 
   onFormClose() {
     this.uiService.toggleTaskAction();
   }
+
   FormControl = new FormControl('');
 }

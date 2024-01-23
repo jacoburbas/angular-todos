@@ -18,3 +18,9 @@ form {
 form>* {
     margin: 25px;
 }
+
+.credentials-error {
+    margin: -18px 0px 0px 0px !important;
+    color: red;
+    text-wrap: nowrap;
+}

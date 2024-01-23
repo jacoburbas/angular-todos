@@ -11,6 +11,7 @@ import { LoginService } from 'src/app/services/login.service';
 export class LoginComponent implements OnInit {
   login: string = '';
   password: string = '';
+  showCredentialsError: boolean = false;
   constructor(private loginService: LoginService, private router: Router) {}
 
   ngOnInit(): void {}
@@ -21,12 +22,11 @@ export class LoginComponent implements OnInit {
       'admin logged'
     ) {
       this.router.navigate(['/admin']);
-    }
-    if (
+    } else if (
       this.loginService.submitLogin(this.login, this.password) === 'user logged'
     ) {
       this.router.navigate(['/dashboard']);
-    }
+    } else this.showCredentialsError = true;
   }
 
   FormControl = new FormControl('');

@@ -1,14 +1,17 @@
 <mat-card>
     <mat-card-title align="center">Login</mat-card-title>
-    <form>
+    <form #loginForm="ngForm">
         <mat-form-field>
             <mat-label>Login</mat-label>
-            <input matInput type="text" name="login" [(ngModel)]="login">
+            <input matInput type="text" name="login" required minlength="3" [(ngModel)]="login">
+
         </mat-form-field>
         <mat-form-field>
             <mat-label>Password</mat-label>
-            <input matInput type="password" name="password" autocomplete="on" [(ngModel)]="password">
+            <input matInput type="password" name="password" required minlength="3" autocomplete="on"
+              [(ngModel)]="password">
         </mat-form-field>
-        <app-button text="Login" (click)="onLoginSubmit()"></app-button>
+        <div *ngIf="showCredentialsError" class="credentials-error">Wrong credentials.</div>
+        <app-button text="Login" disabled="{{ !loginForm.valid }}" (click)="onLoginSubmit()"></app-button>
     </form>
 </mat-card>
