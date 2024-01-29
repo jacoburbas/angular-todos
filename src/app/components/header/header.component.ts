@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { UiService } from 'src/app/services/ui.service';
-import { LoginService } from 'src/app/services/login.service';
 import { Router } from '@angular/router';
 import { Input } from '@angular/core';
 
@@ -12,11 +11,7 @@ import { Input } from '@angular/core';
 export class HeaderComponent implements OnInit {
   @Input() title: string;
 
-  constructor(
-    private uiService: UiService,
-    private router: Router,
-    private loginService: LoginService
-  ) {}
+  constructor(private uiService: UiService, private router: Router) {}
 
   ngOnInit(): void {}
 

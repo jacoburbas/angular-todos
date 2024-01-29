@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { UiService } from './services/ui.service';
 import { LoginService } from './services/login.service';
-import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -15,8 +15,7 @@ export class AppComponent {
 
   constructor(
     private uiService: UiService,
-    private loginservice: LoginService,
-    private router: Router
+    private loginservice: LoginService
   ) {
     this.subscription = this.uiService
       .onToggle()
@@ -24,9 +23,6 @@ export class AppComponent {
   }
 
   ngOnInit(): void {
-    // if (!sessionStorage.getItem('userAccType')) {
-    //   this.router.navigate(['/login']);
-    // }
     this.loginservice.setUserAccType(sessionStorage.getItem('userAccType'));
   }
 }

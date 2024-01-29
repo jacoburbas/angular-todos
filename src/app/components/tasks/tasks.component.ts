@@ -24,7 +24,7 @@ export class TasksComponent implements OnInit {
     private router: Router
   ) {}
 
-  onEditTask(taskToEdit?: Task): void {
+  onEditTask(taskToEdit: Task): void {
     this.uiService.toggleTaskAction(taskToEdit);
   }
 
