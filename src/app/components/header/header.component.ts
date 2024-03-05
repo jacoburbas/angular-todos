@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { UiService } from 'src/app/services/ui.service';
 import { Router } from '@angular/router';
 import { Input } from '@angular/core';
-
+import { MatDialog } from '@angular/material/dialog';
+import { TaskActionComponent } from '../task-action/task.action.component';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -11,12 +11,16 @@ import { Input } from '@angular/core';
 export class HeaderComponent implements OnInit {
   @Input() title: string;
 
-  constructor(private uiService: UiService, private router: Router) {}
+  constructor(public dialog: MatDialog, private router: Router) {}
 
   ngOnInit(): void {}
 
-  onAddTask(): void {
-    this.uiService.toggleTaskAction({ id: -1, title: '', text: '', date: '' });
+  openDialog() {
+    let dialogRef = this.dialog.open(TaskActionComponent, {
+      data: {
+        type: 'add task',
+      },
+    });
   }
 
   hasRoute(route: string) {

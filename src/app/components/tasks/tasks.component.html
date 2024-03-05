@@ -8,7 +8,7 @@
 
         <div *ngIf="hasRoute('/admin')" class="task-options">
             <app-button text="delete task" (btnClick)="onDeleteTask(task)"></app-button>
-            <app-button text="edit task" (btnClick)="onEditTask(task)"></app-button>
+            <app-button text="edit task" (btnClick)="openDialog(task)"></app-button>
         </div>
     </mat-card>
 

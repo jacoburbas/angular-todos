@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { UiService } from './services/ui.service';
 import { LoginService } from './services/login.service';
 import { Subscription } from 'rxjs';
 
@@ -13,14 +12,7 @@ export class AppComponent {
   subscription: Subscription;
   userAccType: String;
 
-  constructor(
-    private uiService: UiService,
-    private loginservice: LoginService
-  ) {
-    this.subscription = this.uiService
-      .onToggle()
-      .subscribe((value) => (this.showTaskAction = value));
-  }
+  constructor(private loginservice: LoginService) {}
 
   ngOnInit(): void {
     this.loginservice.setUserAccType(sessionStorage.getItem('userAccType'));

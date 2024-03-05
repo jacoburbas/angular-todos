@@ -1,44 +1,29 @@
-<div class="overlay">
-  <mat-card class="overlay-inner">
-    <mat-card-title align="center">{{ taskToEdit.id == -1 ? 'Add task' : 'Edit task' }}</mat-card-title>
-    <form #taskForm="ngForm" (ngSubmit)="onFormSubmit()">
-      <input hidden type="text" name="id" [(ngModel)]="taskToEdit.id" />
-      <mat-form-field>
+<mat-card-title align="center"> {{ data.type === "add task" ? 'Add task' : 'Edit task'
+  }} </mat-card-title>
 
-        <mat-label>Title:</mat-label>
+<div class="exit" (click)="closeDialog()">x</div>
 
-        <input matInput type="text" name="title" required minlength="3" maxlength="12" [(ngModel)]="task.title"
-          #title="ngModel">
-        <div *ngIf="title.invalid && (title.dirty || title.touched)" class="formError">
-          <div *ngIf="title.errors?.['required']">Title is required.</div>
-          <div *ngIf="title.errors?.['minlength']">
-            Title must be at least 3 characters long.
-          </div>
-        </div>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Text:</mat-label>
-        <input matInput type="text" name="text" required minlength="3" maxlength="40" [(ngModel)]="task.text"
-          #text="ngModel">
-        <div *ngIf="text.invalid && (text.dirty || text.touched)" class="formError">
-          <div *ngIf="text.errors?.['required']">Text is required.</div>
-          <div *ngIf="text.errors?.['minlength']">
-            Text must be at least 3 characters long.
-          </div>
-        </div>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Date:</mat-label>
-        <input matInput type="text" name="date" type="date" required [(ngModel)]="task.date" #date="ngModel">
-        <div *ngIf="date.invalid && (date.dirty || date.touched)" class="formError">
-          <div *ngIf="date.errors?.['required']">Date is required.</div>
-        </div>
-      </mat-form-field>
-      <app-button text="{{ taskToEdit.id == -1 ? 'Add task' : 'Edit task'  }}"
-        disabled="{{!taskForm.valid}}"></app-button>
-      <div class="exit" (click)="onFormClose()">x</div>
-    </form>
-  </mat-card>
+<form (ngSubmit)="onFormSubmit()" [formGroup]="taskActionForm">
+  <input *ngIf="data.type === 'edit task'" hidden type="text" />
 
+  <mat-form-field>
+    <mat-label>Title:</mat-label>
+    <input matInput type="text" formControlName="title" required="required">
+    <mat-error *ngIf="taskActionForm.controls['title'].hasError('required')">error title</mat-error>
+  </mat-form-field>
 
-</div>
+  <mat-form-field>
+    <mat-label>Text:</mat-label>
+    <input matInput type="text" formControlName="text" required="required">
+    <mat-error *ngIf="taskActionForm.controls['text'].hasError('required')">error text</mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Date:</mat-label>
+    <input matInput type="date" required="required" formControlName="date">
+    <mat-error *ngIf="taskActionForm.controls['date'].hasError('required')">date text</mat-error>
+  </mat-form-field>
+
+  <app-button text="{{ data.type === 'add task' ? 'Add task' : 'Edit task'  }}"
+    disabled="{{!taskActionForm.valid}}"></app-button>
+</form>

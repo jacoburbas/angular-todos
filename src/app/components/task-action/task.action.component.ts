@@ -1,10 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Task } from 'src/app/Task';
-import { UiService } from 'src/app/services/ui.service';
-import { TaskService } from 'src/app/services/task.service';
 import { Subscription } from 'rxjs';
 import { TasksStoreService } from 'src/app/services/tasks-store.service';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Inject } from '@angular/core';
+
+export interface DialogData {
+  type: 'add task' | 'edit task';
+  id: number;
+}
+
 @Component({
   selector: 'app-task-action',
   templateUrl: './task.action.component.html',
@@ -12,52 +18,51 @@ import { TasksStoreService } from 'src/app/services/tasks-store.service';
 })
 export class TaskActionComponent implements OnInit {
   subscription: Subscription;
-  taskToEdit: Task;
-  task: Task = { title: '', text: '', date: '' };
+  taskAction: String;
+  taskIdToEdit: number;
+  public titleCtrl = new FormControl('', [Validators.required]);
+  public textCtrl = new FormControl('', [Validators.required]);
+  public dateCtrl = new FormControl('', [Validators.required]);
+
+  public taskActionForm = new FormGroup({
+    id: this.titleCtrl,
+    title: this.titleCtrl,
+    text: this.textCtrl,
+    date: this.dateCtrl,
+  });
 
   constructor(
-    private uiService: UiService,
-    private taskService: TaskService,
-    private storeService: TasksStoreService
-  ) {
-    this.subscription = this.uiService
-      .onToggle()
-      .subscribe((value) => (this.taskToEdit = value));
-  }
+    private storeService: TasksStoreService,
+    private dialogRef: MatDialogRef<TaskActionComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData
+  ) {}
 
   ngOnInit(): void {
-    this.taskToEdit = this.uiService.getTaskToEdit();
+    this.taskAction = this.dialogRef.componentInstance.data.type;
+    this.taskIdToEdit = this.dialogRef.componentInstance.data.id;
   }
 
   onFormSubmit() {
-    if (this.taskToEdit.id != -1) {
+    if (this.taskAction === 'add task') {
       const newTask: Task = {
-        id: this.taskToEdit.id,
-        title: this.task.title,
-        text: this.task.text,
-        date: this.task.date,
+        title: this.titleCtrl.value,
+        text: this.textCtrl.value,
+        date: this.dateCtrl.value,
       };
-
-      this.taskService.updateTask(newTask).subscribe(() => {
-        this.storeService.getTaskList();
-        this.uiService.toggleTaskAction();
-      });
-    } else if (this.taskToEdit.id == -1) {
-      const newTask: Task = this.task;
-
-      this.taskService.postTask(newTask).subscribe(() => {
-        this.storeService.getTaskList();
-        this.uiService.toggleTaskAction();
-      });
+      this.storeService.postTask(newTask);
+    } else if (this.taskAction === 'edit task') {
+      const newTask: Task = {
+        title: this.titleCtrl.value,
+        text: this.textCtrl.value,
+        date: this.dateCtrl.value,
+        id: this.taskIdToEdit,
+      };
+      this.storeService.editTask(newTask);
     }
-    this.task.title = '';
-    this.task.text = '';
-    this.task.date = '';
+    this.closeDialog();
   }
 
-  onFormClose() {
-    this.uiService.toggleTaskAction();
+  closeDialog() {
+    this.dialogRef.close();
   }
-
-  FormControl = new FormControl('');
 }

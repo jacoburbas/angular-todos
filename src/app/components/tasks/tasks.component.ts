@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Task } from '../../Task';
-import { TaskService } from 'src/app/services/task.service';
-import { UiService } from 'src/app/services/ui.service';
 import { Subscription, takeUntil } from 'rxjs';
 import { TasksStoreService } from 'src/app/services/tasks-store.service';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { TaskActionComponent } from '../task-action/task.action.component';
 
 @Component({
   selector: 'app-tasks',
@@ -18,20 +18,22 @@ export class TasksComponent implements OnInit {
   tasks: Task[] = [];
 
   constructor(
-    private taskService: TaskService,
     private storeService: TasksStoreService,
-    private uiService: UiService,
-    private router: Router
+    private router: Router,
+    public dialog: MatDialog
   ) {}
 
-  onEditTask(taskToEdit: Task): void {
-    this.uiService.toggleTaskAction(taskToEdit);
+  openDialog(taskData: Task) {
+    this.dialog.open(TaskActionComponent, {
+      data: {
+        type: 'edit task',
+        id: taskData.id,
+      },
+    });
   }
 
   onDeleteTask(taskToDelete: Task): void {
-    this.taskService
-      .deleteTask(taskToDelete)
-      .subscribe(() => this.storeService.getTaskList());
+    this.storeService.deleteTask(taskToDelete);
   }
 
   ngOnInit(): void {

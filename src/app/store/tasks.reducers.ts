@@ -19,6 +19,11 @@ export const tasksReducer = createReducer(
   initialState,
   on(TasksActions.GetTaskListSuccess, (state, { tasks }) => {
     return { ...state, taskList: tasks };
+  }),
+  on(TasksActions.DeleteTaskSuccess, (state, taskToDelete) => {
+    console.log('tasktodelete', taskToDelete);
+    // const { taskToDelete, ...rest} = state;
+    return { ...state };
   })
 );
 
