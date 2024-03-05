@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Task } from '../Task';
+import { Task, newTask } from '../Task';
 import { Observable, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 @Injectable({
@@ -14,7 +14,7 @@ export class TaskService {
     return this.http.get<Task[]>(this.apiUrl);
   }
 
-  public postTask(task: Task): Observable<any> {
+  public postTask(task: newTask): Observable<any> {
     console.log('posted task: ', task);
 
     return this.http.post(this.apiUrl, task);

@@ -20,10 +20,14 @@ export const tasksReducer = createReducer(
   on(TasksActions.GetTaskListSuccess, (state, { tasks }) => {
     return { ...state, taskList: tasks };
   }),
-  on(TasksActions.DeleteTaskSuccess, (state, taskToDelete) => {
-    console.log('tasktodelete', taskToDelete);
-    // const { taskToDelete, ...rest} = state;
-    return { ...state };
+  on(TasksActions.DeleteTaskSuccess, (state, { taskToDelete }) => {
+    const rest = state.taskList.filter((e) => e.id !== taskToDelete.id);
+    return { ...state, taskList: rest };
+  }),
+  on(TasksActions.EditTaskSuccess, (state, { taskToEdit }) => {
+    const newArr = state.taskList;
+    newArr[taskToEdit.id] = taskToEdit;
+    return { ...state, taskList: newArr };
   })
 );
 

@@ -1,4 +1,4 @@
-import { Task } from '../Task';
+import { Task, newTask } from '../Task';
 import { createAction, props } from '@ngrx/store';
 
 export const GET_TASK_LIST = '[Tasks] get task list',
@@ -35,7 +35,10 @@ export const DeleteTaskFailure = createAction(
   DELETE_TASK_FAILURE,
   props<{ error: string }>()
 );
-export const EditTaskSuccess = createAction(EDIT_TASK_SUCCESS);
+export const EditTaskSuccess = createAction(
+  EDIT_TASK_SUCCESS,
+  props<{ taskToEdit: Task }>()
+);
 export const EditTaskFailure = createAction(
   EDIT_TASK_FAILIRE,
   props<{ error: string }>()
@@ -54,4 +57,5 @@ export type TaskActions =
   | ReturnType<typeof PostTask>
   | ReturnType<typeof DeleteTask>
   | ReturnType<typeof DeleteTaskSuccess>
+  | ReturnType<typeof EditTaskSuccess>
   | ReturnType<typeof EditTask>;

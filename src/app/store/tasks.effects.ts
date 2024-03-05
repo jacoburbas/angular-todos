@@ -26,27 +26,19 @@ export class TasksEffects {
     this.actions$.pipe(
       ofType(TasksActions.DeleteTask),
       switchMap((action) => {
-        console.log(action);
-        return this.tasksService.deleteTask(action.taskToDelete);
-      }),
-      map((action) => {
-        console.log(action);
-        return TasksActions.DeleteTaskSuccess(action.taskToDelete);
-      }),
-      catchError((err) => {
-        return of(TasksActions.DeleteTaskFailure({ error: err.message }));
+        return this.tasksService.deleteTask(action.taskToDelete).pipe(
+          map(() => {
+            return TasksActions.DeleteTaskSuccess({
+              taskToDelete: action.taskToDelete,
+            });
+          }),
+          catchError((err) => {
+            return of(TasksActions.DeleteTaskFailure({ error: err.message }));
+          })
+        );
       })
     )
   );
-
-  // deleteTaskSucccess$ = createEffect((): any =>
-  //   this.actions$.pipe(
-  //     ofType(TasksActions.DELETE_TASK_SUCCESS),
-  //     switchMap(() => {
-  //       return of(TasksActions.GetTasks());
-  //     })
-  //   )
-  // );
 
   postTask$ = createEffect((): any =>
     this.actions$.pipe(
@@ -76,22 +68,16 @@ export class TasksEffects {
     this.actions$.pipe(
       ofType(TasksActions.EDIT_TASK),
       switchMap((action) => {
-        return this.tasksService.editTask(action.taskToEdit);
-      }),
-      map(() => {
-        return TasksActions.EditTaskSuccess();
-      }),
-      catchError((err) => {
-        return of(TasksActions.EditTaskFailure({ error: err.message }));
-      })
-    )
-  );
-
-  editTaskSucccess$ = createEffect((): any =>
-    this.actions$.pipe(
-      ofType(TasksActions.EDIT_TASK_SUCCESS),
-      switchMap(() => {
-        return of(TasksActions.GetTasks());
+        return this.tasksService.editTask(action.taskToEdit).pipe(
+          map(() => {
+            return TasksActions.EditTaskSuccess({
+              taskToEdit: action.taskToEdit,
+            });
+          }),
+          catchError((err) => {
+            return of(TasksActions.EditTaskFailure({ error: err.message }));
+          })
+        );
       })
     )
   );

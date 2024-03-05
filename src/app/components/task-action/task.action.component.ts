@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Task } from 'src/app/Task';
+import { Task, newTask } from 'src/app/Task';
 import { Subscription } from 'rxjs';
 import { TasksStoreService } from 'src/app/services/tasks-store.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -44,20 +44,20 @@ export class TaskActionComponent implements OnInit {
 
   onFormSubmit() {
     if (this.taskAction === 'add task') {
-      const newTask: Task = {
+      const newTask: newTask = {
         title: this.titleCtrl.value,
         text: this.textCtrl.value,
         date: this.dateCtrl.value,
       };
       this.storeService.postTask(newTask);
     } else if (this.taskAction === 'edit task') {
-      const newTask: Task = {
+      const TaskToEdit: Task = {
         title: this.titleCtrl.value,
         text: this.textCtrl.value,
         date: this.dateCtrl.value,
         id: this.taskIdToEdit,
       };
-      this.storeService.editTask(newTask);
+      this.storeService.editTask(TaskToEdit);
     }
     this.closeDialog();
   }
