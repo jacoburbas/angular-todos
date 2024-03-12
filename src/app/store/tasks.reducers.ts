@@ -25,9 +25,10 @@ export const tasksReducer = createReducer(
     return { ...state, taskList: rest };
   }),
   on(TasksActions.EditTaskSuccess, (state, { taskToEdit }) => {
-    const newArr = state.taskList;
-    newArr[taskToEdit.id] = taskToEdit;
-    return { ...state, taskList: newArr };
+    const updatedArr = JSON.parse(JSON.stringify(state.taskList)).map(
+      (e: Task) => (e.id == taskToEdit.id ? taskToEdit : e)
+    );
+    return { ...state, taskList: updatedArr };
   })
 );
 

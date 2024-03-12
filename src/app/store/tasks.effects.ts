@@ -44,13 +44,14 @@ export class TasksEffects {
     this.actions$.pipe(
       ofType(TasksActions.POST_TASK),
       switchMap((action) => {
-        return this.tasksService.postTask(action.taskToPost);
-      }),
-      map(() => {
-        return TasksActions.PostTaskSuccess();
-      }),
-      catchError((err) => {
-        return of(TasksActions.PostTaskFailure({ error: err.message }));
+        return this.tasksService.postTask(action.taskToPost).pipe(
+          map(() => {
+            return TasksActions.PostTaskSuccess();
+          }),
+          catchError((err) => {
+            return of(TasksActions.PostTaskFailure({ error: err.message }));
+          })
+        );
       })
     )
   );
